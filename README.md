@@ -12,4 +12,4 @@ Welcome to **GamEnv**! This website helps students learn about environmental iss
 
 ## Contact
 
-Contact: xyz
+Contact by making a pull request on the repository
