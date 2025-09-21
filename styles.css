@@ -5,7 +5,7 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    background: url('https://source.unsplash.com/random/1920x1080/?nature,forest') no-repeat center center/cover;
+    background: url('https://cdn.pixabay.com/photo/2016/11/29/05/45/astronomy-1867616_1280.jpg') no-repeat center center/cover;
     color: #333;
 }
 .container {
