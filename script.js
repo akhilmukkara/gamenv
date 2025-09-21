@@ -74,16 +74,13 @@ function loadQuestion() {
     }
     const q = questions[currentQuestion];
     questionEl.textContent = q.question;
-    questionEl.style.opacity = 0;
-    setTimeout(() => {
-        questionEl.style.opacity = 1;
-        questionEl.style.transition = 'opacity 0.5s';
-    }, 100);
+    questionEl.classList.add('animate__fadeInDown');
     optionsEl.innerHTML = '';
     explanationEl.style.display = 'none';
-    q.options.forEach(opt => {
+    q.options.forEach((opt, index) => {
         const btn = document.createElement('div');
-        btn.className = 'option';
+        btn.className = 'option animate__animated animate__fadeIn';
+        btn.style.animationDelay = `${index * 0.2}s`;
         btn.textContent = opt;
         btn.onclick = () => selectOption(opt);
         optionsEl.appendChild(btn);
@@ -101,17 +98,19 @@ function selectOption(selected) {
     });
     explanationEl.innerHTML = q.explanation;
     explanationEl.style.display = 'block';
+    explanationEl.classList.add('animate__animated', 'animate__zoomIn');
     if (selected === q.correct) {
         points += 10;
         localStorage.setItem('points', points);
         pointsEl.textContent = points;
-        confetti({ particleCount: 100, spread: 70 });
+        confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
         updateBadges();
         questionsAnsweredToday++;
         localStorage.setItem('questionsAnsweredToday', questionsAnsweredToday);
         updateDailyChallenge();
     }
     nextBtn.disabled = false;
+    nextBtn.classList.add('animate__bounce');
 }
 
 function nextQuestion() {
@@ -131,6 +130,8 @@ function updateLevel() {
     if (points >= 30) level = 'Eco Warrior';
     if (points >= 50) level = 'Green Champion';
     levelEl.textContent = level;
+    levelEl.parentElement.classList.add('animate__animated', 'animate__pulse');
+    setTimeout(() => levelEl.parentElement.classList.remove('animate__pulse'), 1000);
 }
 
 function updateBadges() {
@@ -144,6 +145,8 @@ function updateBadges() {
         localStorage.setItem('badges', JSON.stringify(badges));
         badgesEl.textContent = badges.join(', ');
     }
+    badgesEl.parentElement.classList.add('animate__animated', 'animate__tada');
+    setTimeout(() => badgesEl.parentElement.classList.remove('animate__tada'), 1000);
 }
 
 function updateDailyChallenge() {

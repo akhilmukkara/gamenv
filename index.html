@@ -5,38 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Environmental Quest</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Environmental Quest</h1>
+    <div class="container animate__animated animate__fadeIn">
+        <h1><i class="fas fa-leaf"></i> Environmental Quest</h1>
         <div id="progress-bar-container">
             <div id="progress-bar"></div>
         </div>
-        <p id="level">Level: <span id="level-value">Beginner</span></p>
-        <p id="points">Points: <span id="points-value">0</span></p>
-        <p id="badges">Badges: <span id="badges-value">None</span></p>
-        <p id="streak">Streak: <span id="streak-value">0 days</span></p>
+        <p id="level"><i class="fas fa-trophy"></i> Level: <span id="level-value">Beginner</span></p>
+        <p id="points"><i class="fas fa-star"></i> Points: <span id="points-value">0</span></p>
+        <p id="badges"><i class="fas fa-medal"></i> Badges: <span id="badges-value">None</span></p>
+        <p id="streak"><i class="fas fa-fire"></i> Streak: <span id="streak-value">0 days</span></p>
         <div id="daily-challenge">
-            <h3>Daily Eco-Challenge</h3>
+            <h3><i class="fas fa-calendar-check"></i> Daily Eco-Challenge</h3>
             <p id="challenge-text">Answer 3 questions today to earn a bonus!</p>
             <p id="challenge-status"></p>
         </div>
         <div id="quiz">
-            <h2 id="question"></h2>
+            <h2 id="question" class="animate__animated"></h2>
             <div id="options"></div>
             <div id="explanation" style="display: none;"></div>
-            <button id="next-btn" onclick="nextQuestion()" disabled>Next</button>
+            <button id="next-btn" onclick="nextQuestion()" disabled class="animate__animated animate__bounceIn">Next</button>
         </div>
         <div id="tasks">
-            <h3>Eco-Tasks</h3>
+            <h3><i class="fas fa-tasks"></i> Eco-Tasks</h3>
             <p>Complete a real-world task and log it for points!</p>
             <input type="text" id="task-input" placeholder="e.g., Planted a tree">
-            <button onclick="logTask()">Log Task</button>
+            <button onclick="logTask()" class="animate__animated animate__bounceIn">Log Task</button>
         </div>
-        <button onclick="generateCertificate()">Download Certificate</button>
-        <button onclick="resetGame()">Reset Progress</button>
+        <button onclick="generateCertificate()" class="animate__animated animate__bounceIn"><i class="fas fa-certificate"></i> Download Certificate</button>
+        <button onclick="resetGame()" class="animate__animated animate__bounceIn"><i class="fas fa-redo"></i> Reset Progress</button>
     </div>
     <script src="script.js"></script>
 </body>
