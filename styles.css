@@ -3,23 +3,23 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
-    background-color: #f0f4f8;
+    background: linear-gradient(to bottom, #a8e063, #56ab2f);
 }
 .container {
     background: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 500px;
+    width: 90%;
+    max-width: 600px;
     text-align: center;
 }
 h1 {
     color: #2e7d32;
 }
-h2 {
+h2, h3 {
     color: #1b5e20;
 }
 button {
@@ -28,6 +28,7 @@ button {
     background-color: #4caf50;
     color: white;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
 }
 button:disabled {
@@ -44,6 +45,7 @@ button:hover:not(:disabled) {
     background: #e0f7fa;
     cursor: pointer;
     border-radius: 5px;
+    transition: background 0.3s;
 }
 .option:hover {
     background: #b2ebf2;
@@ -52,7 +54,49 @@ button:hover:not(:disabled) {
     background: #4caf50;
     color: white;
 }
-#points, #badges {
+.option.correct {
+    animation: glow 1s;
+}
+@keyframes glow {
+    0% { box-shadow: 0 0 10px green; }
+    100% { box-shadow: 0 0 0 green; }
+}
+#progress-bar-container {
+    width: 100%;
+    background: #ddd;
+    border-radius: 5px;
+    height: 10px;
+    margin: 10px 0;
+}
+#progress-bar {
+    width: 0%;
+    height: 100%;
+    background: #4caf50;
+    border-radius: 5px;
+    transition: width 0.5s;
+}
+#points, #badges, #streak, #level {
     font-weight: bold;
     color: #2e7d32;
+}
+#explanation {
+    margin: 10px 0;
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 5px;
+}
+#tasks input {
+    padding: 8px;
+    margin: 5px 0;
+    width: calc(100% - 20px);
+}
+#quiz, #daily-challenge, #tasks {
+    margin: 20px 0;
+}
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+    }
+    h1 { font-size: 1.5em; }
+    h2 { font-size: 1.2em; }
 }
