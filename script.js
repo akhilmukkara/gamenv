@@ -196,8 +196,8 @@ const ecoTips = [
 ];
 
 const badgeDescriptions = {
-    'Eco Starter': 'Earned 30 points!',
-    'Green Champion': 'Earned 50 points!',
+    'Eco Starter': 'Earned 50 points!',
+    'Green Champion': 'Earned 80 points!',
     'Daily Eco Star': 'Completed a daily challenge!',
     'Action Hero': 'Logged a real-world eco-task!'
 };
@@ -289,6 +289,22 @@ function startQuiz(selectedDifficulty) {
         loadGame();
     } catch (error) {
         console.error('Error starting quiz:', error);
+    }
+}
+
+function playAgain() {
+    try {
+        currentQuestion = 0;
+        questionsSet = [];
+        difficulty = '';
+        localStorage.setItem('currentQuestion', currentQuestion);
+        localStorage.setItem('difficulty', difficulty);
+        completionMessage.style.display = 'none';
+        namePrompt.style.display = 'none';
+        difficultyPrompt.style.display = 'block';
+        mainContent.style.display = 'none';
+    } catch (error) {
+        console.error('Error playing again:', error);
     }
 }
 
