@@ -51,6 +51,12 @@ button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
 }
+#ok-btn {
+    background-color: #0288d1; /* Blue for OK button */
+}
+#ok-btn:hover:not(:disabled) {
+    box-shadow: 0 4px 10px rgba(2, 136, 209, 0.5);
+}
 .option {
     display: block;
     margin: 15px 0;
@@ -64,6 +70,11 @@ button:disabled {
 .option:hover {
     background: #b2ebf2;
     transform: translateY(-5px);
+}
+.option.selected {
+    background: #0288d1; /* Neutral blue for initial selection */
+    color: white;
+    transform: scale(1.05);
 }
 .option.selected.correct {
     background: #4caf50;

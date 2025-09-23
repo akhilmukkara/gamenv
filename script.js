@@ -42,6 +42,7 @@ let streak = parseInt(localStorage.getItem('streak')) || 0;
 let lastVisit = localStorage.getItem('lastVisit');
 let questionsAnsweredToday = parseInt(localStorage.getItem('questionsAnsweredToday')) || 0;
 let factsLearned = parseInt(localStorage.getItem('factsLearned')) || 0;
+let selectedOption = null;
 
 const ecoTips = [
     "Save water by fixing leaks!",
@@ -68,6 +69,7 @@ const streakEl = document.getElementById('streak-value');
 const levelEl = document.getElementById('level-value');
 const progressBar = document.getElementById('progress-bar');
 const nextBtn = document.getElementById('next-btn');
+const okBtn = document.getElementById('ok-btn');
 const challengeStatus = document.getElementById('challenge-status');
 const factsEl = document.getElementById('facts-value');
 const tipEl = document.getElementById('eco-tip');
@@ -94,6 +96,7 @@ function loadQuestion() {
             questionEl.textContent = 'Quest Completed!';
             optionsEl.innerHTML = '';
             explanationEl.style.display = 'none';
+            okBtn.style.display = 'none';
             nextBtn.style.display = 'none';
             return;
         }
@@ -102,6 +105,7 @@ function loadQuestion() {
         questionEl.classList.add('animate__fadeInDown');
         optionsEl.innerHTML = '';
         explanationEl.style.display = 'none';
+        selectedOption = null;
         q.options.forEach((opt, index) => {
             const btn = document.createElement('div');
             btn.className = 'option animate__animated animate__fadeIn';
@@ -110,20 +114,39 @@ function loadQuestion() {
             btn.onclick = () => selectOption(opt);
             optionsEl.appendChild(btn);
         });
-        updateProgress();
+        okBtn.style.display = 'inline-block';
+        okBtn.disabled = true;
         nextBtn.disabled = true;
+        updateProgress();
     } catch (error) {
         console.error('Error loading question:', error);
     }
 }
 
-function selectOption(selected) {
+function selectOption(opt) {
+    try {
+        if (selectedOption) return; // Lock selection
+        selectedOption = opt;
+        document.querySelectorAll('.option').forEach(btn => {
+            btn.classList.remove('selected');
+            if (btn.textContent === opt) {
+                btn.classList.add('selected');
+            }
+            btn.onclick = null; // Disable further clicks
+        });
+        okBtn.disabled = false;
+    } catch (error) {
+        console.error('Error selecting option:', error);
+    }
+}
+
+function confirmSelection() {
     try {
         const q = questions[currentQuestion];
         document.querySelectorAll('.option').forEach(btn => {
             btn.classList.remove('selected', 'correct', 'incorrect');
-            if (btn.textContent === selected) {
-                btn.classList.add('selected', selected === q.correct ? 'correct' : 'incorrect');
+            if (btn.textContent === selectedOption) {
+                btn.classList.add('selected', selectedOption === q.correct ? 'correct' : 'incorrect');
             }
             if (btn.textContent === q.correct) {
                 btn.classList.add('correct');
@@ -132,7 +155,7 @@ function selectOption(selected) {
         explanationEl.innerHTML = q.explanation;
         explanationEl.style.display = 'block';
         explanationEl.classList.add('animate__animated', 'animate__zoomIn');
-        if (selected === q.correct) {
+        if (selectedOption === q.correct) {
             points += 10;
             factsLearned++;
             localStorage.setItem('points', points);
@@ -149,10 +172,11 @@ function selectOption(selected) {
         tipEl.textContent = ecoTips[Math.floor(Math.random() * ecoTips.length)];
         tipEl.style.display = 'block';
         setTimeout(() => tipEl.style.display = 'none', 3000);
+        okBtn.disabled = true;
         nextBtn.disabled = false;
         nextBtn.classList.add('animate__bounce');
     } catch (error) {
-        console.error('Error selecting option:', error);
+        console.error('Error confirming selection:', error);
     }
 }
 
@@ -319,6 +343,7 @@ function resetGame() {
         streak = 0;
         questionsAnsweredToday = 0;
         factsLearned = 0;
+        selectedOption = null;
 
         // Update DOM elements
         pointsEl.textContent = points;
@@ -327,6 +352,8 @@ function resetGame() {
         factsEl.textContent = factsLearned;
         challengeStatus.textContent = '';
         nextBtn.style.display = 'block';
+        okBtn.style.display = 'inline-block';
+        okBtn.disabled = true;
         questionEl.classList.remove('animate__fadeInDown');
         explanationEl.style.display = 'none';
         tipEl.style.display = 'none';
