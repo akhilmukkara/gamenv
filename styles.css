@@ -35,7 +35,7 @@ h2, h3 {
 }
 button {
     padding: 12px 24px;
-    margin: 10px 0;
+    margin: 10px 5px;
     background-color: #4caf50;
     color: white;
     border: none;
@@ -52,7 +52,7 @@ button:disabled {
     cursor: not-allowed;
 }
 #ok-btn {
-    background-color: #0288d1; /* Blue for OK button */
+    background-color: #0288d1;
 }
 #ok-btn:hover:not(:disabled) {
     box-shadow: 0 4px 10px rgba(2, 136, 209, 0.5);
@@ -72,7 +72,7 @@ button:disabled {
     transform: translateY(-5px);
 }
 .option.selected {
-    background: #0288d1; /* Neutral blue for initial selection */
+    background: #0288d1;
     color: white;
     transform: scale(1.05);
 }
@@ -82,7 +82,7 @@ button:disabled {
     transform: scale(1.05);
 }
 .option.selected.incorrect {
-    background: #ff5722; /* Orange; change to #f44336 for red if preferred */
+    background: #ff5722;
     color: white;
     transform: scale(1.05);
 }
@@ -120,14 +120,14 @@ button:disabled {
     border-radius: 10px;
     box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
 }
-#tasks input, #name-prompt input {
+#tasks input, #name-prompt input, #difficulty-prompt input {
     padding: 10px;
     margin: 10px 0;
     width: calc(100% - 20px);
     border: 1px solid #ccc;
     border-radius: 8px;
 }
-#quiz, #daily-challenge, #tasks, #name-prompt, #completion-message {
+#quiz, #daily-challenge, #tasks, #name-prompt, #difficulty-prompt, #completion-message {
     margin: 25px 0;
     padding: 20px;
     border: 1px solid #e0e0e0;

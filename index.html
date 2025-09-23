@@ -17,7 +17,14 @@
             <h1><i class="fas fa-leaf"></i> Welcome to GamEnv</h1>
             <p>Enter your name to start the quiz!</p>
             <input type="text" id="name-input" placeholder="Your name">
-            <button onclick="startQuiz()" class="animate__animated animate__bounceIn">Start Quiz</button>
+            <button onclick="submitName()" class="animate__animated animate__bounceIn">Next</button>
+        </div>
+        <div id="difficulty-prompt" style="display: none;">
+            <h1><i class="fas fa-leaf"></i> Choose Difficulty</h1>
+            <p>Select your difficulty level:</p>
+            <button onclick="startQuiz('basic')" class="animate__animated animate__bounceIn">Basic</button>
+            <button onclick="startQuiz('intermediate')" class="animate__animated animate__bounceIn">Intermediate</button>
+            <button onclick="startQuiz('hard')" class="animate__animated animate__bounceIn">Hard</button>
         </div>
         <div id="main-content" style="display: none;">
             <h1><i class="fas fa-leaf"></i> GamEnv</h1>
