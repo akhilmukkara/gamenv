@@ -135,11 +135,15 @@ button:disabled {
     background: white;
 }
 #eco-tip {
-    animation: slideInRight 0.5s ease;
+    animation: slideInRight 0.5s ease forwards, fadeOut 0.5s ease 2.5s forwards;
 }
 @keyframes slideInRight {
-    from { transform: translateX(100%); }
-    to { transform: translateX(0); }
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; display: none; }
 }
 #badges-tooltip {
     position: absolute;
@@ -156,4 +160,5 @@ button:disabled {
     }
     h1 { font-size: 2em; }
     button { padding: 10px 20px; }
+    #eco-tip { font-size: 0.8em; padding: 10px; }
 }

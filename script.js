@@ -170,7 +170,10 @@ function confirmSelection() {
         }
         tipEl.textContent = ecoTips[Math.floor(Math.random() * ecoTips.length)];
         tipEl.style.display = 'block';
-        setTimeout(() => tipEl.style.display = 'none', 3000);
+        setTimeout(() => {
+            tipEl.style.display = 'none';
+            tipEl.classList.remove('animate__animated', 'animate__slideInRight', 'animate__fadeOut');
+        }, 3000);
         okBtn.disabled = true;
         nextBtn.disabled = false;
         nextBtn.classList.add('animate__bounce');
