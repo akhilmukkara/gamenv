@@ -43,6 +43,7 @@ let lastVisit = localStorage.getItem('lastVisit');
 let questionsAnsweredToday = parseInt(localStorage.getItem('questionsAnsweredToday')) || 0;
 let factsLearned = parseInt(localStorage.getItem('factsLearned')) || 0;
 let selectedOption = null;
+let userName = localStorage.getItem('userName') || '';
 
 const ecoTips = [
     "Save water by fixing leaks!",
@@ -60,6 +61,8 @@ const badgeDescriptions = {
 };
 
 // DOM elements
+const namePrompt = document.getElementById('name-prompt');
+const mainContent = document.getElementById('main-content');
 const questionEl = document.getElementById('question');
 const optionsEl = document.getElementById('options');
 const explanationEl = document.getElementById('explanation');
@@ -73,30 +76,59 @@ const okBtn = document.getElementById('ok-btn');
 const challengeStatus = document.getElementById('challenge-status');
 const factsEl = document.getElementById('facts-value');
 const tipEl = document.getElementById('eco-tip');
+const completionMessage = document.getElementById('completion-message');
+const completionText = document.getElementById('completion-text');
 
 // Initialize game
 function loadGame() {
     try {
-        updateLevel();
-        pointsEl.textContent = points;
-        badgesEl.textContent = badges.length ? badges.join(', ') : 'None';
-        streakEl.textContent = `${streak} days`;
-        factsEl.textContent = factsLearned;
-        updateDailyChallenge();
-        loadQuestion();
+        if (userName) {
+            namePrompt.style.display = 'none';
+            mainContent.style.display = 'block';
+            updateLevel();
+            pointsEl.textContent = points;
+            badgesEl.textContent = badges.length ? badges.join(', ') : 'None';
+            streakEl.textContent = `${streak} days`;
+            factsEl.textContent = factsLearned;
+            updateDailyChallenge();
+            loadQuestion();
+        } else {
+            namePrompt.style.display = 'block';
+            mainContent.style.display = 'none';
+        }
     } catch (error) {
         console.error('Error loading game:', error);
+    }
+}
+
+function startQuiz() {
+    try {
+        const nameInput = document.getElementById('name-input').value.trim();
+        if (nameInput) {
+            userName = nameInput;
+            localStorage.setItem('userName', userName);
+            namePrompt.style.display = 'none';
+            mainContent.style.display = 'block';
+            loadGame();
+        } else {
+            alert('Please enter your name to start the quiz!');
+        }
+    } catch (error) {
+        console.error('Error starting quiz:', error);
     }
 }
 
 function loadQuestion() {
     try {
         if (currentQuestion >= questions.length) {
-            questionEl.textContent = 'Quest Completed!';
+            questionEl.textContent = '';
             optionsEl.innerHTML = '';
             explanationEl.style.display = 'none';
             okBtn.style.display = 'none';
             nextBtn.style.display = 'none';
+            completionMessage.style.display = 'block';
+            const messages = ['you nailed it!', 'you rocked it!', 'you’re an eco-star!'];
+            completionText.textContent = `Congrats ${userName}, ${messages[Math.floor(Math.random() * messages.length)]} You earned ${points} points and these badges: ${badges.length ? badges.join(', ') : 'None'}.`;
             return;
         }
         const q = questions[currentQuestion];
@@ -313,7 +345,7 @@ function generateCertificate() {
         doc.setFontSize(20);
         doc.text('GamEnv Certificate', 20, 20);
         doc.setFontSize(14);
-        doc.text(`Congratulations!`, 20, 40);
+        doc.text(`Congratulations, ${userName}!`, 20, 40);
         doc.text(`You earned ${points} points and the following badges:`, 20, 50);
         doc.text(badges.length ? badges.join(', ') : 'None', 20, 60);
         doc.text(`Keep protecting our planet!`, 20, 80);
@@ -333,6 +365,7 @@ function resetGame() {
         localStorage.removeItem('lastVisit');
         localStorage.removeItem('questionsAnsweredToday');
         localStorage.removeItem('factsLearned');
+        localStorage.removeItem('userName');
 
         // Reset state variables
         points = 0;
@@ -342,6 +375,7 @@ function resetGame() {
         questionsAnsweredToday = 0;
         factsLearned = 0;
         selectedOption = null;
+        userName = '';
 
         // Update DOM elements
         pointsEl.textContent = points;
@@ -355,13 +389,15 @@ function resetGame() {
         questionEl.classList.remove('animate__fadeInDown');
         explanationEl.style.display = 'none';
         tipEl.style.display = 'none';
+        completionMessage.style.display = 'none';
 
         // Reset badge tooltip event listeners
         badgesEl.onmouseover = null;
         badgesEl.onmouseout = null;
 
-        updateLevel();
-        loadQuestion();
+        // Show name prompt
+        namePrompt.style.display = 'block';
+        mainContent.style.display = 'none';
     } catch (error) {
         console.error('Error resetting game:', error);
         alert('Failed to reset progress. Please check the console for errors.');

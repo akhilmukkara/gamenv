@@ -13,39 +13,50 @@
 </head>
 <body>
     <div class="container animate__animated animate__fadeIn">
-        <h1><i class="fas fa-leaf"></i> GamEnv</h1>
-        <div id="progress-bar-container">
-            <div id="progress-bar"></div>
+        <div id="name-prompt">
+            <h1><i class="fas fa-leaf"></i> Welcome to GamEnv</h1>
+            <p>Enter your name to start the quiz!</p>
+            <input type="text" id="name-input" placeholder="Your name">
+            <button onclick="startQuiz()" class="animate__animated animate__bounceIn">Start Quiz</button>
         </div>
-        <p id="level"><i class="fas fa-trophy"></i> Level: <span id="level-value">Beginner</span></p>
-        <p id="points"><i class="fas fa-star"></i> Points: <span id="points-value">0</span></p>
-        <p id="badges"><i class="fas fa-medal"></i> Badges: <span id="badges-value">None</span></p>
-        <div id="badges-tooltip" style="display: none;"></div>
-        <p id="streak"><i class="fas fa-fire"></i> Streak: <span id="streak-value">0 days</span></p>
-        <p id="facts"><i class="fas fa-book"></i> Eco-Facts Learned: <span id="facts-value">0</span></p>
-        <div id="daily-challenge">
-            <h3><i class="fas fa-calendar-check"></i> Daily Eco-Challenge</h3>
-            <p id="challenge-text">Answer 3 questions today to earn a bonus!</p>
-            <p id="challenge-status"></p>
+        <div id="main-content" style="display: none;">
+            <h1><i class="fas fa-leaf"></i> GamEnv</h1>
+            <div id="progress-bar-container">
+                <div id="progress-bar"></div>
+            </div>
+            <p id="level"><i class="fas fa-trophy"></i> Level: <span id="level-value">Beginner</span></p>
+            <p id="points"><i class="fas fa-star"></i> Points: <span id="points-value">0</span></p>
+            <p id="badges"><i class="fas fa-medal"></i> Badges: <span id="badges-value">None</span></p>
+            <div id="badges-tooltip" style="display: none;"></div>
+            <p id="streak"><i class="fas fa-fire"></i> Streak: <span id="streak-value">0 days</span></p>
+            <p id="facts"><i class="fas fa-book"></i> Eco-Facts Learned: <span id="facts-value">0</span></p>
+            <div id="daily-challenge">
+                <h3><i class="fas fa-calendar-check"></i> Daily Eco-Challenge</h3>
+                <p id="challenge-text">Answer 3 questions today to earn a bonus!</p>
+                <p id="challenge-status"></p>
+            </div>
+            <div id="quiz">
+                <h2 id="question" class="animate__animated"></h2>
+                <div id="options"></div>
+                <div id="explanation" style="display: none;"></div>
+                <button id="ok-btn" onclick="confirmSelection()" disabled class="animate__animated animate__bounceIn">OK</button>
+                <button id="next-btn" onclick="nextQuestion()" disabled class="animate__animated animate__bounceIn">Next</button>
+            </div>
+            <div id="completion-message" style="display: none;">
+                <h2 id="completion-text" class="animate__animated animate__bounceIn"></h2>
+            </div>
+            <div id="tasks">
+                <h3><i class="fas fa-tasks"></i> Eco-Tasks</h3>
+                <p>Complete a real-world task and log it for points!</p>
+                <input type="text" id="task-input" placeholder="e.g., Planted a tree">
+                <button onclick="logTask()" class="animate__animated animate__bounceIn">Log Task</button>
+            </div>
+            <button onclick="generateCertificate()" class="animate__animated animate__bounceIn"><i class="fas fa-certificate"></i> Download Certificate</button>
+            <button onclick="resetGame()" class="animate__animated animate__bounceIn"><i class="fas fa-redo"></i> Reset Progress</button>
+            <div id="eco-tip" style="display: none; position: fixed; top: 20px; right: 20px; padding: 15px; background: #4caf50; color: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000;"></div>
+            <audio id="correct-sound" src="https://freesound.org/data/previews/171/171671_2434988-lq.mp3"></audio>
+            <audio id="task-sound" src="https://freesound.org/data/previews/148/148663_2604332-lq.mp3"></audio>
         </div>
-        <div id="quiz">
-            <h2 id="question" class="animate__animated"></h2>
-            <div id="options"></div>
-            <div id="explanation" style="display: none;"></div>
-            <button id="ok-btn" onclick="confirmSelection()" disabled class="animate__animated animate__bounceIn">OK</button>
-            <button id="next-btn" onclick="nextQuestion()" disabled class="animate__animated animate__bounceIn">Next</button>
-        </div>
-        <div id="tasks">
-            <h3><i class="fas fa-tasks"></i> Eco-Tasks</h3>
-            <p>Complete a real-world task and log it for points!</p>
-            <input type="text" id="task-input" placeholder="e.g., Planted a tree">
-            <button onclick="logTask()" class="animate__animated animate__bounceIn">Log Task</button>
-        </div>
-        <button onclick="generateCertificate()" class="animate__animated animate__bounceIn"><i class="fas fa-certificate"></i> Download Certificate</button>
-        <button onclick="resetGame()" class="animate__animated animate__bounceIn"><i class="fas fa-redo"></i> Reset Progress</button>
-        <div id="eco-tip" style="display: none; position: fixed; top: 20px; right: 20px; padding: 15px; background: #4caf50; color: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000;"></div>
-        <audio id="correct-sound" src="https://freesound.org/data/previews/171/171671_2434988-lq.mp3"></audio>
-        <audio id="task-sound" src="https://freesound.org/data/previews/148/148663_2604332-lq.mp3"></audio>
     </div>
     <script src="script.js"></script>
 </body>

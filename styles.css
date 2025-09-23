@@ -120,14 +120,14 @@ button:disabled {
     border-radius: 10px;
     box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
 }
-#tasks input {
+#tasks input, #name-prompt input {
     padding: 10px;
     margin: 10px 0;
     width: calc(100% - 20px);
     border: 1px solid #ccc;
     border-radius: 8px;
 }
-#quiz, #daily-challenge, #tasks {
+#quiz, #daily-challenge, #tasks, #name-prompt, #completion-message {
     margin: 25px 0;
     padding: 20px;
     border: 1px solid #e0e0e0;
