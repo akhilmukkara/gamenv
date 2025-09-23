@@ -32,6 +32,13 @@ const questions = [
         options: ["Meeting needs without compromising future generations", "Rapid industrialization", "Ignoring environmental laws", "Overexploitation of resources"],
         correct: "Meeting needs without compromising future generations",
         explanation: "Sustainable development balances current needs with future resource availability, per SDG goals."
+    },
+    {
+        question: "What is a major renewable energy source?",
+        options: ["Coal", "Solar power", "Natural gas", "Nuclear waste"],
+        correct: "Solar Power",
+        explanation: "Solar power harnesses energy from the sun, a renewable resource, reducing reliance on fossil fuels."
+        
     }
 ];
 
