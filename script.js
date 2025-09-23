@@ -1,7 +1,6 @@
 const { jsPDF } = window.jspdf;
-//hi
-// Quiz data with explanations
 
+// Quiz data with explanations
 const questions = [
     {
         question: "What is the main cause of climate change?",
@@ -42,6 +41,22 @@ let badges = JSON.parse(localStorage.getItem('badges')) || [];
 let streak = parseInt(localStorage.getItem('streak')) || 0;
 let lastVisit = localStorage.getItem('lastVisit');
 let questionsAnsweredToday = parseInt(localStorage.getItem('questionsAnsweredToday')) || 0;
+let factsLearned = parseInt(localStorage.getItem('factsLearned')) || 0;
+
+const ecoTips = [
+    "Save water by fixing leaks!",
+    "Use reusable bags to reduce plastic waste!",
+    "Plant a tree to combat CO2 emissions!",
+    "Turn off lights when not in use!",
+    "Compost food waste for a healthier planet!"
+];
+
+const badgeDescriptions = {
+    'Eco Starter': 'Earned 30 points!',
+    'Green Champion': 'Earned 50 points!',
+    'Daily Eco Star': 'Completed a daily challenge!',
+    'Action Hero': 'Logged a real-world eco-task!'
+};
 
 // DOM elements
 const questionEl = document.getElementById('question');
@@ -61,6 +76,7 @@ function loadGame() {
     pointsEl.textContent = points;
     badgesEl.textContent = badges.length ? badges.join(', ') : 'None';
     streakEl.textContent = `${streak} days`;
+    document.getElementById('facts-value').textContent = factsLearned;
     updateDailyChallenge();
     loadQuestion();
 }
@@ -93,23 +109,35 @@ function loadQuestion() {
 function selectOption(selected) {
     const q = questions[currentQuestion];
     document.querySelectorAll('.option').forEach(btn => {
-        btn.classList.remove('selected');
-        if (btn.textContent === selected) btn.classList.add('selected');
-        if (btn.textContent === q.correct) btn.classList.add('correct');
+        btn.classList.remove('selected', 'correct', 'incorrect');
+        if (btn.textContent === selected) {
+            btn.classList.add('selected', selected === q.correct ? 'correct' : 'incorrect');
+        }
+        if (btn.textContent === q.correct) {
+            btn.classList.add('correct');
+        }
     });
     explanationEl.innerHTML = q.explanation;
     explanationEl.style.display = 'block';
     explanationEl.classList.add('animate__animated', 'animate__zoomIn');
     if (selected === q.correct) {
         points += 10;
+        factsLearned++;
         localStorage.setItem('points', points);
+        localStorage.setItem('factsLearned', factsLearned);
         pointsEl.textContent = points;
+        document.getElementById('facts-value').textContent = factsLearned;
         confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+        document.getElementById('correct-sound').play();
         updateBadges();
         questionsAnsweredToday++;
         localStorage.setItem('questionsAnsweredToday', questionsAnsweredToday);
         updateDailyChallenge();
     }
+    const tipEl = document.getElementById('eco-tip');
+    tipEl.textContent = ecoTips[Math.floor(Math.random() * ecoTips.length)];
+    tipEl.style.display = 'block';
+    setTimeout(() => tipEl.style.display = 'none', 3000);
     nextBtn.disabled = false;
     nextBtn.classList.add('animate__bounce');
 }
@@ -128,9 +156,17 @@ function updateProgress() {
 
 function updateLevel() {
     let level = 'Beginner';
-    if (points >= 30) level = 'Eco Warrior';
-    if (points >= 50) level = 'Green Champion';
+    let avatarSrc = 'https://img.icons8.com/color/48/000000/tree.png';
+    if (points >= 30) {
+        level = 'Eco Warrior';
+        avatarSrc = 'https://img.icons8.com/color/48/000000/forest.png';
+    }
+    if (points >= 50) {
+        level = 'Green Champion';
+        avatarSrc = 'https://img.icons8.com/color/48/000000/park.png';
+    }
     levelEl.textContent = level;
+    document.getElementById('avatar').src = avatarSrc;
     levelEl.parentElement.classList.add('animate__animated', 'animate__pulse');
     setTimeout(() => levelEl.parentElement.classList.remove('animate__pulse'), 1000);
 }
@@ -148,6 +184,16 @@ function updateBadges() {
     }
     badgesEl.parentElement.classList.add('animate__animated', 'animate__tada');
     setTimeout(() => badgesEl.parentElement.classList.remove('animate__tada'), 1000);
+    badgesEl.onmouseover = () => {
+        const tooltip = document.getElementById('badges-tooltip');
+        tooltip.innerHTML = badges.map(b => `${b}: ${badgeDescriptions[b]}`).join('<br>');
+        tooltip.style.display = 'block';
+        tooltip.style.top = `${badgesEl.getBoundingClientRect().top - 60}px`;
+        tooltip.style.left = `${badgesEl.getBoundingClientRect().left}px`;
+    };
+    badgesEl.onmouseout = () => {
+        document.getElementById('badges-tooltip').style.display = 'none';
+    };
 }
 
 function updateDailyChallenge() {
@@ -192,6 +238,7 @@ function logTask() {
             localStorage.setItem('badges', JSON.stringify(badges));
             badgesEl.textContent = badges.join(', ');
         }
+        document.getElementById('task-sound').play();
         alert('Task logged! +20 points');
         document.getElementById('task-input').value = '';
         updateLevel();
@@ -203,13 +250,13 @@ function logTask() {
 function generateCertificate() {
     const doc = new jsPDF();
     doc.setFontSize(20);
-    doc.text('Environmental Quest Certificate', 20, 20);
+    doc.text('GamEnv Certificate', 20, 20);
     doc.setFontSize(14);
     doc.text(`Congratulations!`, 20, 40);
     doc.text(`You earned ${points} points and the following badges:`, 20, 50);
     doc.text(badges.length ? badges.join(', ') : 'None', 20, 60);
     doc.text(`Keep protecting our planet!`, 20, 80);
-    doc.save('EcoQuest_Certificate.pdf');
+    doc.save('GamEnv_Certificate.pdf');
 }
 
 function resetGame() {
@@ -219,14 +266,17 @@ function resetGame() {
     localStorage.removeItem('streak');
     localStorage.removeItem('lastVisit');
     localStorage.removeItem('questionsAnsweredToday');
+    localStorage.removeItem('factsLearned');
     points = 0;
     badges = [];
     currentQuestion = 0;
     streak = 0;
     questionsAnsweredToday = 0;
+    factsLearned = 0;
     pointsEl.textContent = points;
     badgesEl.textContent = 'None';
     streakEl.textContent = '0 days';
+    document.getElementById('facts-value').textContent = factsLearned;
     challengeStatus.textContent = '';
     nextBtn.style.display = 'block';
     updateLevel();
