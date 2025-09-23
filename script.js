@@ -31,13 +31,6 @@ const questions = [
         options: ["Meeting needs without compromising future generations", "Rapid industrialization", "Ignoring environmental laws", "Overexploitation of resources"],
         correct: "Meeting needs without compromising future generations",
         explanation: "Sustainable development balances current needs with future resource availability, per SDG goals."
-    },
-    {
-        question: "What is a major renewable energy source?",
-        options: ["Coal", "Solar power", "Natural gas", "Nuclear waste"],
-        correct: "Solar Power",
-        explanation: "Solar power harnesses energy from the sun, a renewable resource, reducing reliance on fossil fuels."
-        
     }
 ];
 
@@ -80,7 +73,6 @@ const okBtn = document.getElementById('ok-btn');
 const challengeStatus = document.getElementById('challenge-status');
 const factsEl = document.getElementById('facts-value');
 const tipEl = document.getElementById('eco-tip');
-const avatarEl = document.getElementById('avatar');
 
 // Initialize game
 function loadGame() {
@@ -210,17 +202,13 @@ function updateProgress() {
 function updateLevel() {
     try {
         let level = 'Beginner';
-        let avatarSrc = 'https://img.icons8.com/color/48/000000/tree.png';
         if (points >= 30) {
             level = 'Eco Warrior';
-            avatarSrc = 'https://img.icons8.com/color/48/000000/forest.png';
         }
         if (points >= 50) {
             level = 'Green Champion';
-            avatarSrc = 'https://img.icons8.com/color/48/000000/park.png';
         }
         levelEl.textContent = level;
-        avatarEl.src = avatarSrc;
         levelEl.parentElement.classList.add('animate__animated', 'animate__pulse');
         setTimeout(() => levelEl.parentElement.classList.remove('animate__pulse'), 1000);
     } catch (error) {
