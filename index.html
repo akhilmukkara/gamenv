@@ -14,13 +14,16 @@
 <body>
     <div class="container animate__animated animate__fadeIn">
         <h1><i class="fas fa-leaf"></i> GamEnv</h1>
+        <img id="avatar" src="https://img.icons8.com/color/48/000000/tree.png" alt="Eco Avatar" style="width: 60px; margin: 10px;">
         <div id="progress-bar-container">
             <div id="progress-bar"></div>
         </div>
         <p id="level"><i class="fas fa-trophy"></i> Level: <span id="level-value">Beginner</span></p>
         <p id="points"><i class="fas fa-star"></i> Points: <span id="points-value">0</span></p>
         <p id="badges"><i class="fas fa-medal"></i> Badges: <span id="badges-value">None</span></p>
+        <div id="badges-tooltip" style="display: none;"></div>
         <p id="streak"><i class="fas fa-fire"></i> Streak: <span id="streak-value">0 days</span></p>
+        <p id="facts"><i class="fas fa-book"></i> Eco-Facts Learned: <span id="facts-value">0</span></p>
         <div id="daily-challenge">
             <h3><i class="fas fa-calendar-check"></i> Daily Eco-Challenge</h3>
             <p id="challenge-text">Answer 3 questions today to earn a bonus!</p>
@@ -40,6 +43,9 @@
         </div>
         <button onclick="generateCertificate()" class="animate__animated animate__bounceIn"><i class="fas fa-certificate"></i> Download Certificate</button>
         <button onclick="resetGame()" class="animate__animated animate__bounceIn"><i class="fas fa-redo"></i> Reset Progress</button>
+        <div id="eco-tip" style="display: none; position: fixed; top: 20px; right: 20px; padding: 15px; background: #4caf50; color: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000;"></div>
+        <audio id="correct-sound" src="https://freesound.org/data/previews/171/171671_2434988-lq.mp3"></audio>
+        <audio id="task-sound" src="https://freesound.org/data/previews/148/148663_2604332-lq.mp3"></audio>
     </div>
     <script src="script.js"></script>
 </body>
