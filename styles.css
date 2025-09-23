@@ -5,8 +5,15 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    background: url('https://images.pexels.com/photos/807785/pexels-photo-807785.jpeg') no-repeat center center/cover;
+    background: linear-gradient(45deg, #2e7d32, #66bb6a, #a5d6a7);
+    background-size: 200% 200%;
+    animation: gradientFlow 10s ease infinite;
     color: #333;
+}
+@keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 .container {
     background: rgba(255, 255, 255, 0.9);
