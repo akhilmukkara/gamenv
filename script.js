@@ -129,6 +129,7 @@ function loadQuestion() {
             completionMessage.style.display = 'block';
             const messages = ['you nailed it!', 'you rocked it!', 'you’re an eco-star!'];
             completionText.textContent = `Congrats ${userName}, ${messages[Math.floor(Math.random() * messages.length)]} You earned ${points} points and these badges: ${badges.length ? badges.join(', ') : 'None'}.`;
+            progressBar.style.width = '100%'; // Ensure 100% on completion
             return;
         }
         const q = questions[currentQuestion];
@@ -227,8 +228,9 @@ function nextQuestion() {
 
 function updateProgress() {
     try {
-        const progress = (currentQuestion / questions.length) * 100;
+        const progress = currentQuestion >= questions.length ? 100 : (currentQuestion / questions.length) * 100;
         progressBar.style.width = `${progress}%`;
+        console.log(`Progress: ${progress}% (currentQuestion: ${currentQuestion}, questions.length: ${questions.length})`);
     } catch (error) {
         console.error('Error updating progress:', error);
     }
