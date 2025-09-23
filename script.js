@@ -347,14 +347,14 @@ function loadQuestion() {
 
 function selectOption(opt) {
     try {
-        if (selectedOption) return;
         selectedOption = opt;
         document.querySelectorAll('.option').forEach(btn => {
             btn.classList.remove('selected');
             if (btn.textContent === opt) {
                 btn.classList.add('selected');
             }
-            btn.onclick = null;
+            // Re-enable clicks for all options
+            btn.onclick = () => selectOption(btn.textContent);
         });
         okBtn.disabled = false;
     } catch (error) {
@@ -373,6 +373,7 @@ function confirmSelection() {
             if (btn.textContent === q.correct) {
                 btn.classList.add('correct');
             }
+            btn.onclick = null; // Lock clicks after confirmation
         });
         explanationEl.innerHTML = q.explanation;
         explanationEl.style.display = 'block';
