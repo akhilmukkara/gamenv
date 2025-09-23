@@ -51,6 +51,12 @@ button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
 }
+#ok-btn {
+    background-color: #0288d1; /* Blue for OK button */
+}
+#ok-btn:hover:not(:disabled) {
+    box-shadow: 0 4px 10px rgba(2, 136, 209, 0.5);
+}
 .option {
     display: block;
     margin: 15px 0;
@@ -66,7 +72,17 @@ button:disabled {
     transform: translateY(-5px);
 }
 .option.selected {
+    background: #0288d1; /* Neutral blue for initial selection */
+    color: white;
+    transform: scale(1.05);
+}
+.option.selected.correct {
     background: #4caf50;
+    color: white;
+    transform: scale(1.05);
+}
+.option.selected.incorrect {
+    background: #ff5722; /* Orange; change to #f44336 for red if preferred */
     color: white;
     transform: scale(1.05);
 }
@@ -91,7 +107,7 @@ button:disabled {
     border-radius: 10px;
     transition: width 0.5s ease-in-out;
 }
-#points, #badges, #streak, #level {
+#points, #badges, #streak, #level, #facts {
     font-weight: 600;
     color: #2e7d32;
     font-size: 1.2em;
@@ -117,6 +133,22 @@ button:disabled {
     border: 1px solid #e0e0e0;
     border-radius: 10px;
     background: white;
+}
+#eco-tip {
+    animation: slideInRight 0.5s ease;
+}
+@keyframes slideInRight {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+#badges-tooltip {
+    position: absolute;
+    background: #4caf50;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    z-index: 1000;
 }
 @media (max-width: 600px) {
     .container {
