@@ -1,7 +1,7 @@
 const { jsPDF } = window.jspdf;
-//hi
+
 // Quiz data with explanations
-//checking
+
 const questions = [
     {
         question: "What is the main cause of climate change?",
