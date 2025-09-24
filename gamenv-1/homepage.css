@@ -1,0 +1,49 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(45deg, #2e7d32, #66bb6a, #a5d6a7);
+    background-size: 200% 200%;
+    animation: gradientFlow 10s ease infinite;
+    color: #333;
+}
+
+.logo {
+    margin-bottom: 30px;
+    width: 150px; /* Adjust as needed */
+}
+
+.name-input {
+    padding: 12px 20px;
+    margin: 10px 0;
+    width: calc(100% - 40px);
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1em;
+}
+
+.name-input:focus {
+    border-color: #4caf50;
+    outline: none;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+.start-button {
+    padding: 12px 24px;
+    margin: 10px 5px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.start-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(76, 175, 80, 0.5);
+}
