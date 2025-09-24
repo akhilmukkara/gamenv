@@ -1,7 +1,6 @@
-// Import jsPDF for certificate generation
 const { jsPDF } = window.jspdf;
 
-// Question arrays for each difficulty level (8 questions each)
+// Quiz questions for each difficulty level
 const basicQuestions = [
     {
         question: "What is the main cause of air pollution in cities?",
@@ -9,7 +8,42 @@ const basicQuestions = [
         correct: "Cars",
         explanation: "Cars emit harmful gases from burning fossil fuels."
     },
-    // ... (7 more questions for Basic)
+    {
+        question: "What should you do with plastic bottles after use?",
+        options: ["Throw in trash", "Recycle", "Burn them", "Leave in park"],
+        correct: "Recycle",
+        explanation: "Recycling reduces waste in landfills."
+    },
+    {
+        question: "Why is saving water important?",
+        options: ["It's fun", "To prevent shortages", "For swimming", "To make ice"],
+        correct: "To prevent shortages",
+        explanation: "Water is a limited resource."
+    },
+    {
+        question: "What is a renewable energy source?",
+        options: ["Coal", "Solar power", "Oil", "Gas"],
+        correct: "Solar power",
+        explanation: "Solar power comes from the sun, which is unlimited."
+    },
+    {
+        question: "How can you reduce energy use at home?",
+        options: ["Leave lights on", "Turn off lights when not in use", "Use more heaters", "Open windows in winter"],
+        correct: "Turn off lights when not in use",
+        explanation: "Saves electricity and reduces bills."
+    },
+    {
+        question: "What is composting?",
+        options: ["Burning trash", "Turning food waste into soil", "Throwing away food", "Buying soil"],
+        correct: "Turning food waste into soil",
+        explanation: "Composting helps plants grow and reduces waste."
+    },
+    {
+        question: "Why are trees important?",
+        options: ["They make noise", "They provide oxygen", "They eat food", "They drive cars"],
+        correct: "They provide oxygen",
+        explanation: "Trees absorb CO2 and release oxygen."
+    },
     {
         question: "What is pollution?",
         options: ["Clean air", "Harmful substances in environment", "Good for health", "Type of food"],
@@ -25,7 +59,42 @@ const intermediateQuestions = [
         correct: "Trapping heat in atmosphere",
         explanation: "Gases like CO2 trap heat, causing global warming."
     },
-    // ... (7 more questions for Intermediate)
+    {
+        question: "What is biodiversity?",
+        options: ["Variety of life", "Single species", "Pollution type", "Energy source"],
+        correct: "Variety of life",
+        explanation: "Biodiversity supports ecosystem health."
+    },
+    {
+        question: "How does deforestation affect climate?",
+        options: ["Increases CO2", "Decreases CO2", "No effect", "Cools the planet"],
+        correct: "Increases CO2",
+        explanation: "Trees absorb CO2; removing them increases greenhouse gases."
+    },
+    {
+        question: "What is sustainable development?",
+        options: ["Using resources without depleting them", "Rapid use of resources", "Ignoring environment", "Building more factories"],
+        correct: "Using resources without depleting them",
+        explanation: "Meets current needs without compromising future."
+    },
+    {
+        question: "What is plastic pollution's impact on oceans?",
+        options: ["Harms marine life", "Helps fish", "Cleans water", "No impact"],
+        correct: "Harms marine life",
+        explanation: "Animals mistake plastic for food."
+    },
+    {
+        question: "What is renewable energy?",
+        options: ["Energy from sources that replenish", "From fossil fuels", "From nuclear", "From coal"],
+        correct: "Energy from sources that replenish",
+        explanation: "Like solar, wind."
+    },
+    {
+        question: "Why is coral bleaching a problem?",
+        options: ["Destroys habitats", "Makes corals colorful", "Helps fish", "No problem"],
+        correct: "Destroys habitats",
+        explanation: "Due to warming oceans, affects marine biodiversity."
+    },
     {
         question: "What is carbon footprint?",
         options: ["Amount of CO2 emitted by activities", "Shoe print in carbon", "Type of fuel", "Plant growth"],
@@ -41,7 +110,42 @@ const hardQuestions = [
         correct: "Climate accord to limit warming",
         explanation: "Aims to keep global temperature rise below 2°C."
     },
-    // ... (7 more questions for Hard)
+    {
+        question: "What is circular economy?",
+        options: ["Recycling and reusing to minimize waste", "Linear production", "Wasting resources", "Buying new"],
+        correct: "Recycling and reusing to minimize waste",
+        explanation: "Reduces environmental impact."
+    },
+    {
+        question: "How does climate change affect sea levels?",
+        options: ["Rising due to melting ice", "Lowering", "No effect", "Fluctuating randomly"],
+        correct: "Rising due to melting ice",
+        explanation: "Threatens coastal areas."
+    },
+    {
+        question: "What is IPCC?",
+        options: ["Intergovernmental Panel on Climate Change", "International Police", "Food organization", "Sports committee"],
+        correct: "Intergovernmental Panel on Climate Change",
+        explanation: "Assesses climate science."
+    },
+    {
+        question: "What is net zero emissions?",
+        options: ["Balance between emitted and removed greenhouse gases", "No emissions at all", "Increasing emissions", "Ignoring emissions"],
+        correct: "Balance between emitted and removed greenhouse gases",
+        explanation: "Goal for limiting warming."
+    },
+    {
+        question: "What is environmental justice?",
+        options: ["Fair treatment in environmental policies", "Legal system for nature", "Ignoring poor communities", "Building more factories"],
+        correct: "Fair treatment in environmental policies",
+        explanation: "Ensures no group bears disproportionate burden."
+    },
+    {
+        question: "What is the role of wetlands in environment?",
+        options: ["Carbon sinks and biodiversity hotspots", "Waste dumps", "Urban development", "No role"],
+        correct: "Carbon sinks and biodiversity hotspots",
+        explanation: "Absorb CO2 and filter water."
+    },
     {
         question: "What is microplastic?",
         options: ["Small plastic particles polluting oceans", "Large plastic bags", "Type of fish", "Clean water"],
@@ -50,37 +154,20 @@ const hardQuestions = [
     }
 ];
 
-// Game state variables (stored in localStorage for persistence)
-let currentQuestion = parseInt(localStorage.getItem('currentQuestion')) || 0; // Tracks current question index
-let points = parseInt(localStorage.getItem('points')) || 0; // User points
-let badges = JSON.parse(localStorage.getItem('badges')) || []; // Earned badges
-let streak = parseInt(localStorage.getItem('streak')) || 0; // Daily streak
-let lastVisit = localStorage.getItem('lastVisit'); // Last visit date
-let questionsAnsweredToday = parseInt(localStorage.getItem('questionsAnsweredToday')) || 0; // Daily answers
-let factsLearned = parseInt(localStorage.getItem('factsLearned')) || 0; // Eco-facts learned
-let selectedOption = null; // Current selected option
-let userName = localStorage.getItem('userName') || ''; // User’s name
-let difficulty = localStorage.getItem('difficulty') || ''; // Chosen difficulty
-let questionsSet = []; // Randomized questions for current quiz
+// Game state
+let currentQuestion = parseInt(localStorage.getItem('currentQuestion')) || 0;
+let points = parseInt(localStorage.getItem('points')) || 0;
+let badges = JSON.parse(localStorage.getItem('badges')) || [];
+let streak = parseInt(localStorage.getItem('streak')) || 0;
+let lastVisit = localStorage.getItem('lastVisit');
+let questionsAnsweredToday = parseInt(localStorage.getItem('questionsAnsweredToday')) || 0;
+let factsLearned = parseInt(localStorage.getItem('factsLearned')) || 0;
+let selectedOption = null;
+let userName = localStorage.getItem('userName') || '';
+let difficulty = localStorage.getItem('difficulty') || '';
+let questionsSet = [];
 
-// Eco-tips for popups
-const ecoTips = [
-    "Save water by fixing leaks!",
-    "Use reusable bags to reduce plastic waste!",
-    "Plant a tree to combat CO2 emissions!",
-    "Turn off lights when not in use!",
-    "Compost food waste for a healthier planet!"
-];
-
-// Badge descriptions for tooltip
-const badgeDescriptions = {
-    'Eco Starter': 'Earned 50 points!',
-    'Green Champion': 'Earned 80 points!',
-    'Daily Eco Star': 'Completed a daily challenge!',
-    'Action Hero': 'Logged a real-world eco-task!'
-};
-
-// DOM elements (links to HTML for updates)
+// DOM elements
 const namePrompt = document.getElementById('name-prompt');
 const difficultyPrompt = document.getElementById('difficulty-prompt');
 const mainContent = document.getElementById('main-content');
@@ -100,44 +187,50 @@ const tipEl = document.getElementById('eco-tip');
 const completionMessage = document.getElementById('completion-message');
 const completionText = document.getElementById('completion-text');
 
-// Shuffles an array (Fisher-Yates algorithm) for random question order
+const ecoTips = [
+    "Save water by fixing leaks!",
+    "Use reusable bags to reduce plastic waste!",
+    "Plant a tree to combat CO2 emissions!",
+    "Turn off lights when not in use!",
+    "Compost food waste for a healthier planet!"
+];
+
+const badgeDescriptions = {
+    'Eco Starter': 'Earned 50 points!',
+    'Green Champion': 'Earned 80 points!',
+    'Daily Eco Star': 'Completed a daily challenge!',
+    'Action Hero': 'Logged a real-world eco-task!'
+};
+
+// Shuffle function
 function shuffle(array) {
-    try {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-    } catch (error) {
-        console.error('Error shuffling array:', error);
-        return array; // Return unchanged array if error occurs
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
     }
+    return array;
 }
 
-// Sets questions based on selected difficulty
+// Set questions based on difficulty
 function setQuestions() {
-    try {
-        let sourceQuestions;
-        switch (difficulty) {
-            case 'basic':
-                sourceQuestions = basicQuestions;
-                break;
-            case 'intermediate':
-                sourceQuestions = intermediateQuestions;
-                break;
-            case 'hard':
-                sourceQuestions = hardQuestions;
-                break;
-            default:
-                sourceQuestions = basicQuestions; // Fallback
-        }
-        questionsSet = shuffle([...sourceQuestions]); // Randomize copy
-    } catch (error) {
-        console.error('Error setting questions:', error);
+    let sourceQuestions;
+    switch (difficulty) {
+        case 'basic':
+            sourceQuestions = basicQuestions;
+            break;
+        case 'intermediate':
+            sourceQuestions = intermediateQuestions;
+            break;
+        case 'hard':
+            sourceQuestions = hardQuestions;
+            break;
+        default:
+            sourceQuestions = basicQuestions; // Fallback
     }
+    questionsSet = shuffle([...sourceQuestions]); // Randomize and copy
 }
 
-// Initializes game, showing appropriate screen
+// Initialize game
 function loadGame() {
     try {
         if (!userName) {
@@ -168,7 +261,6 @@ function loadGame() {
     }
 }
 
-// Handles name submission
 function submitName() {
     try {
         const nameInput = document.getElementById('name-input').value.trim();
@@ -185,7 +277,6 @@ function submitName() {
     }
 }
 
-// Starts quiz with selected difficulty
 function startQuiz(selectedDifficulty) {
     try {
         difficulty = selectedDifficulty;
@@ -201,7 +292,6 @@ function startQuiz(selectedDifficulty) {
     }
 }
 
-// Resets quiz for replay, keeping points/badges
 function playAgain() {
     try {
         currentQuestion = 0;
@@ -213,15 +303,11 @@ function playAgain() {
         namePrompt.style.display = 'none';
         difficultyPrompt.style.display = 'block';
         mainContent.style.display = 'none';
-        nextBtn.style.display = 'inline-block';
-        nextBtn.disabled = true;
-        console.log('Play Again: Reset quiz, showing difficulty prompt');
     } catch (error) {
         console.error('Error playing again:', error);
     }
 }
 
-// Loads current question or completion message
 function loadQuestion() {
     try {
         if (currentQuestion >= questionsSet.length) {
@@ -234,7 +320,6 @@ function loadQuestion() {
             const messages = ['you nailed it!', 'you rocked it!', 'you’re an eco-star!'];
             completionText.textContent = `Congrats ${userName}, ${messages[Math.floor(Math.random() * messages.length)]} You earned ${points} points and these badges: ${badges.length ? badges.join(', ') : 'None'}.`;
             progressBar.style.width = '100%';
-            console.log('Quiz completed, showing completion message');
             return;
         }
         const q = questionsSet[currentQuestion];
@@ -253,16 +338,13 @@ function loadQuestion() {
         });
         okBtn.style.display = 'inline-block';
         okBtn.disabled = true;
-        nextBtn.style.display = 'inline-block';
         nextBtn.disabled = true;
         updateProgress();
-        console.log(`Loaded question ${currentQuestion + 1}, Next button visible: ${nextBtn.style.display}, disabled: ${nextBtn.disabled}`);
     } catch (error) {
         console.error('Error loading question:', error);
     }
 }
 
-// Handles option selection (allows multiple changes)
 function selectOption(opt) {
     try {
         selectedOption = opt;
@@ -271,16 +353,15 @@ function selectOption(opt) {
             if (btn.textContent === opt) {
                 btn.classList.add('selected');
             }
+            // Re-enable clicks for all options
             btn.onclick = () => selectOption(btn.textContent);
         });
         okBtn.disabled = false;
-        console.log(`Selected option: ${opt}, OK button enabled`);
     } catch (error) {
         console.error('Error selecting option:', error);
     }
 }
 
-// Confirms selection, shows feedback
 function confirmSelection() {
     try {
         const q = questionsSet[currentQuestion];
@@ -292,7 +373,7 @@ function confirmSelection() {
             if (btn.textContent === q.correct) {
                 btn.classList.add('correct');
             }
-            btn.onclick = null;
+            btn.onclick = null; // Lock clicks after confirmation
         });
         explanationEl.innerHTML = q.explanation;
         explanationEl.style.display = 'block';
@@ -320,13 +401,11 @@ function confirmSelection() {
         okBtn.disabled = true;
         nextBtn.disabled = false;
         nextBtn.classList.add('animate__bounce');
-        console.log('Confirmed selection, Next button enabled');
     } catch (error) {
         console.error('Error confirming selection:', error);
     }
 }
 
-// Advances to next question
 function nextQuestion() {
     try {
         currentQuestion++;
@@ -338,7 +417,6 @@ function nextQuestion() {
     }
 }
 
-// Updates progress bar (100% on completion)
 function updateProgress() {
     try {
         const progress = currentQuestion >= questionsSet.length ? 100 : (currentQuestion / questionsSet.length) * 100;
@@ -349,7 +427,6 @@ function updateProgress() {
     }
 }
 
-// Updates user level based on points
 function updateLevel() {
     try {
         let level = 'Beginner';
@@ -363,7 +440,6 @@ function updateLevel() {
     }
 }
 
-// Awards badges based on points
 function updateBadges() {
     try {
         if (points >= 50 && !badges.includes('Eco Starter')) {
@@ -393,7 +469,6 @@ function updateBadges() {
     }
 }
 
-// Manages daily streak and challenge
 function updateDailyChallenge() {
     try {
         const today = new Date().toDateString();
@@ -429,7 +504,6 @@ function updateDailyChallenge() {
     }
 }
 
-// Logs eco-tasks for points
 function logTask() {
     try {
         const taskInput = document.getElementById('task-input').value;
@@ -454,65 +528,22 @@ function logTask() {
     }
 }
 
-// Generates a styled certificate PDF
 function generateCertificate() {
     try {
         const doc = new jsPDF();
-        doc.setProperties({
-            title: 'GamEnv Eco-Champion Certificate',
-            subject: 'Certificate of Achievement',
-            author: 'GamEnv',
-            creator: 'GamEnv'
-        });
-        const green = [76, 175, 80];
-        const darkGreen = [27, 94, 32];
-        doc.setDrawColor(...green);
-        doc.setLineWidth(2);
-        doc.rect(10, 10, 190, 277);
-        doc.setFontSize(28);
-        doc.setFont('helvetica', 'bold');
-        doc.setTextColor(...darkGreen);
-        doc.text('GamEnv Eco-Champion Certificate', 105, 40, { align: 'center' });
-        doc.setLineWidth(1);
-        doc.line(30, 50, 180, 50);
-        doc.setFontSize(18);
-        doc.setFont('helvetica', 'normal');
-        doc.setTextColor(0, 0, 0);
-        doc.text(`This certifies that`, 105, 70, { align: 'center' });
-        doc.setFontSize(24);
-        doc.setFont('helvetica', 'bold');
-        doc.setTextColor(...green);
-        doc.text(`${userName}`, 105, 90, { align: 'center' });
-        doc.setFontSize(16);
-        doc.setFont('helvetica', 'normal');
-        doc.setTextColor(0, 0, 0);
-        doc.text(`has successfully completed the ${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)} level`, 105, 110, { align: 'center' });
-        doc.text(`of the GamEnv Environmental Quiz`, 105, 125, { align: 'center' });
-        doc.text(`on ${new Date().toLocaleDateString()}`, 105, 140, { align: 'center' });
-        doc.text(`Points Earned: ${points}`, 105, 160, { align: 'center' });
-        doc.text(`Badges Awarded: ${badges.length ? badges.join(', ') : 'None'}`, 105, 175, { align: 'center' });
-        doc.setFontSize(12);
-        doc.setTextColor(...darkGreen);
-        doc.text('Thank you for your commitment to environmental education!', 105, 200, { align: 'center' });
-        doc.text('Keep protecting our planet.', 105, 215, { align: 'center' });
-        doc.setFontSize(10);
-        doc.setTextColor(100, 100, 100);
-        doc.text('Powered by GamEnv - Sustainable Learning Initiative', 105, 260, { align: 'center' });
-        doc.setLineWidth(0.5);
-        doc.line(30, 250, 180, 250);
         doc.setFontSize(20);
-        doc.setTextColor(...green);
-        doc.text('🌿', 20, 20);
-        doc.text('🌿', 190, 20);
-        doc.text('🌿', 20, 277);
-        doc.text('🌿', 190, 277);
+        doc.text('GamEnv Certificate', 20, 20);
+        doc.setFontSize(14);
+        doc.text(`Congratulations, ${userName}!`, 20, 40);
+        doc.text(`You earned ${points} points and the following badges:`, 20, 50);
+        doc.text(badges.length ? badges.join(', ') : 'None', 20, 60);
+        doc.text(`Keep protecting our planet!`, 20, 80);
         doc.save('GamEnv_Certificate.pdf');
     } catch (error) {
         console.error('Error generating certificate:', error);
     }
 }
 
-// Resets all progress
 function resetGame() {
     try {
         localStorage.removeItem('points');
@@ -524,6 +555,7 @@ function resetGame() {
         localStorage.removeItem('factsLearned');
         localStorage.removeItem('userName');
         localStorage.removeItem('difficulty');
+
         points = 0;
         badges = [];
         currentQuestion = 0;
@@ -534,6 +566,7 @@ function resetGame() {
         userName = '';
         difficulty = '';
         questionsSet = [];
+
         pointsEl.textContent = points;
         badgesEl.textContent = 'None';
         streakEl.textContent = '0 days';
@@ -546,8 +579,10 @@ function resetGame() {
         explanationEl.style.display = 'none';
         tipEl.style.display = 'none';
         completionMessage.style.display = 'none';
+
         badgesEl.onmouseover = null;
         badgesEl.onmouseout = null;
+
         namePrompt.style.display = 'block';
         difficultyPrompt.style.display = 'none';
         mainContent.style.display = 'none';
