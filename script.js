@@ -303,6 +303,9 @@ function playAgain() {
         namePrompt.style.display = 'none';
         difficultyPrompt.style.display = 'block';
         mainContent.style.display = 'none';
+        nextBtn.style.display = 'inline-block'; // Ensure Next button is visible
+        nextBtn.disabled = true; // Initially disabled
+        console.log('Play Again: Reset quiz, showing difficulty prompt');
     } catch (error) {
         console.error('Error playing again:', error);
     }
@@ -320,6 +323,7 @@ function loadQuestion() {
             const messages = ['you nailed it!', 'you rocked it!', 'you’re an eco-star!'];
             completionText.textContent = `Congrats ${userName}, ${messages[Math.floor(Math.random() * messages.length)]} You earned ${points} points and these badges: ${badges.length ? badges.join(', ') : 'None'}.`;
             progressBar.style.width = '100%';
+            console.log('Quiz completed, showing completion message');
             return;
         }
         const q = questionsSet[currentQuestion];
@@ -338,8 +342,10 @@ function loadQuestion() {
         });
         okBtn.style.display = 'inline-block';
         okBtn.disabled = true;
+        nextBtn.style.display = 'inline-block';
         nextBtn.disabled = true;
         updateProgress();
+        console.log(`Loaded question ${currentQuestion + 1}, Next button visible: ${nextBtn.style.display}, disabled: ${nextBtn.disabled}`);
     } catch (error) {
         console.error('Error loading question:', error);
     }
@@ -353,10 +359,10 @@ function selectOption(opt) {
             if (btn.textContent === opt) {
                 btn.classList.add('selected');
             }
-            // Re-enable clicks for all options
-            btn.onclick = () => selectOption(btn.textContent);
+            btn.onclick = () => selectOption(btn.textContent); // Allow multiple clicks
         });
         okBtn.disabled = false;
+        console.log(`Selected option: ${opt}, OK button enabled`);
     } catch (error) {
         console.error('Error selecting option:', error);
     }
@@ -401,6 +407,7 @@ function confirmSelection() {
         okBtn.disabled = true;
         nextBtn.disabled = false;
         nextBtn.classList.add('animate__bounce');
+        console.log('Confirmed selection, Next button enabled');
     } catch (error) {
         console.error('Error confirming selection:', error);
     }
