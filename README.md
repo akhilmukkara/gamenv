@@ -1,15 +1,49 @@
-# GamEnv: Learn & Play for a Greener Future
 
-Welcome to **GamEnv**! This website helps students learn about environmental issues and other important topics through engaging games, quizzes, and puzzles. Earn points as you play and learn!
+<div align="center">
+	<img src="https://img.icons8.com/color/96/000000/leaf.png" width="80" alt="GamEnv Logo"/>
+</div>
 
-## Features
+---
 
-- **Educational Games:** Interactive games focused on climate change, recycling, biodiversity, and more.
-- **Quizzes & Puzzles:** Test your knowledge and solve fun challenges.
-- **Points & Rewards:** Earn points for completing activities and climb the leaderboard.
-- **Progress Tracking:** Monitor your achievements and learning journey.
-- **Student-Friendly Design:** Safe, accessible, and easy to use for all ages.
+## 🌱 What is GamEnv?
 
-## Contact
+**GamEnv** is a modern, interactive website designed to help students and young learners explore environmental topics through fun games, quizzes, and real-world eco-challenges. Earn points, collect badges, and track your progress as you learn how to make the world a greener place!
 
-Contact by making a pull request on the repository
+---
+
+## 🚀 Features
+
+- 🎮 **Educational Games & Quizzes**: Play interactive games and quizzes on climate change, recycling, biodiversity, and more.
+- 🏆 **Points, Badges & Leaderboards**: Earn points, unlock badges, and see your achievements grow.
+- 📈 **Progress Tracking**: Monitor your learning journey and eco-facts learned.
+- 🌍 **Daily Eco-Challenges**: Take on daily tasks and real-world eco-missions for bonus points.
+- 🧑‍🎓 **Student-Friendly Design**: Safe, accessible, and visually engaging for all ages.
+- 🥇 **Certificates**: Download a personalized certificate as you progress!
+
+---
+
+## 🖥️ Quick Start
+
+1. Open https://akhilmukkara.me/gamenv/ on your preferred browser.
+2. Enter your name, choose a difficulty, and start playing.
+
+---
+
+
+## 🛠️ Tech Stack
+
+- **Frontend:** HTML5, CSS3 (Poppins font, Animate.css, Font Awesome)
+- **JavaScript:** Interactive logic, quizzes, and certificate generation
+- **No backend required** (fully client-side)
+
+---
+
+## 📬 Contact
+
+For questions or suggestions, open an issue or submit a pull request.
+
+---
+
+<div align="center">
+	<b>Let's make learning about the environment fun and impactful! 🌏</b>
+</div>
