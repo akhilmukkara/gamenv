@@ -303,8 +303,8 @@ function playAgain() {
         namePrompt.style.display = 'none';
         difficultyPrompt.style.display = 'block';
         mainContent.style.display = 'none';
-        nextBtn.style.display = 'inline-block'; // Ensure Next button is visible
-        nextBtn.disabled = true; // Initially disabled
+        nextBtn.style.display = 'inline-block';
+        nextBtn.disabled = true;
         console.log('Play Again: Reset quiz, showing difficulty prompt');
     } catch (error) {
         console.error('Error playing again:', error);
@@ -359,7 +359,7 @@ function selectOption(opt) {
             if (btn.textContent === opt) {
                 btn.classList.add('selected');
             }
-            btn.onclick = () => selectOption(btn.textContent); // Allow multiple clicks
+            btn.onclick = () => selectOption(btn.textContent);
         });
         okBtn.disabled = false;
         console.log(`Selected option: ${opt}, OK button enabled`);
@@ -379,7 +379,7 @@ function confirmSelection() {
             if (btn.textContent === q.correct) {
                 btn.classList.add('correct');
             }
-            btn.onclick = null; // Lock clicks after confirmation
+            btn.onclick = null;
         });
         explanationEl.innerHTML = q.explanation;
         explanationEl.style.display = 'block';
@@ -538,13 +538,80 @@ function logTask() {
 function generateCertificate() {
     try {
         const doc = new jsPDF();
-        doc.setFontSize(20);
-        doc.text('GamEnv Certificate', 20, 20);
+        
+        // Set document properties
+        doc.setProperties({
+            title: 'GamEnv Eco-Champion Certificate',
+            subject: 'Certificate of Achievement',
+            author: 'GamEnv',
+            creator: 'GamEnv'
+        });
+
+        // Colors
+        const green = [76, 175, 80]; // #4CAF50
+        const darkGreen = [27, 94, 32]; // #1B5E20
+
+        // Border
+        doc.setDrawColor(...green);
+        doc.setLineWidth(2);
+        doc.rect(10, 10, 190, 277); // A4 size border (210x297mm)
+
+        // Title
+        doc.setFontSize(28);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(...darkGreen);
+        doc.text('GamEnv Eco-Champion Certificate', 105, 40, { align: 'center' });
+
+        // Decorative line
+        doc.setLineWidth(1);
+        doc.line(30, 50, 180, 50);
+
+        // Congratulatory message
+        doc.setFontSize(18);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(0, 0, 0);
+        doc.text(`This certifies that`, 105, 70, { align: 'center' });
+
+        // User name
+        doc.setFontSize(24);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(...green);
+        doc.text(`${userName}`, 105, 90, { align: 'center' });
+
+        // Achievement details
+        doc.setFontSize(16);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(0, 0, 0);
+        doc.text(`has successfully completed the ${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)} level`, 105, 110, { align: 'center' });
+        doc.text(`of the GamEnv Environmental Quiz`, 105, 125, { align: 'center' });
+        doc.text(`on ${new Date().toLocaleDateString()}`, 105, 140, { align: 'center' });
+
+        // Points and badges
         doc.setFontSize(14);
-        doc.text(`Congratulations, ${userName}!`, 20, 40);
-        doc.text(`You earned ${points} points and the following badges:`, 20, 50);
-        doc.text(badges.length ? badges.join(', ') : 'None', 20, 60);
-        doc.text(`Keep protecting our planet!`, 20, 80);
+        doc.text(`Points Earned: ${points}`, 105, 160, { align: 'center' });
+        doc.text(`Badges Awarded: ${badges.length ? badges.join(', ') : 'None'}`, 105, 175, { align: 'center' });
+
+        // Motivational message
+        doc.setFontSize(12);
+        doc.setTextColor(...darkGreen);
+        doc.text('Thank you for your commitment to environmental education!', 105, 200, { align: 'center' });
+        doc.text('Keep protecting our planet.', 105, 215, { align: 'center' });
+
+        // Footer
+        doc.setFontSize(10);
+        doc.setTextColor(100, 100, 100);
+        doc.text('Powered by GamEnv - Sustainable Learning Initiative', 105, 260, { align: 'center' });
+        doc.setLineWidth(0.5);
+        doc.line(30, 250, 180, 250);
+
+        // Decorative elements (text-based eco symbols)
+        doc.setFontSize(20);
+        doc.setTextColor(...green);
+        doc.text('🌿', 20, 20); // Top-left
+        doc.text('🌿', 190, 20); // Top-right
+        doc.text('🌿', 20, 277); // Bottom-left
+        doc.text('🌿', 190, 277); // Bottom-right
+
         doc.save('GamEnv_Certificate.pdf');
     } catch (error) {
         console.error('Error generating certificate:', error);
