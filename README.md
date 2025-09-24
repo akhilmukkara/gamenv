@@ -1,13 +1,6 @@
 
 <div align="center">
 	<img src="https://img.icons8.com/color/96/000000/leaf.png" width="80" alt="GamEnv Logo"/>
-  
-	# GamEnv
-  
-	<b>Learn & Play for a Greener Future</b>
-  
-	<br>
-	<i>Gamified learning platform for environmental awareness</i>
 </div>
 
 ---
@@ -31,33 +24,17 @@
 
 ## 🖥️ Quick Start
 
-1. **Clone or Download** this repository.
-2. Open `index.html` in your browser—no installation required!
-3. Enter your name, choose a difficulty, and start playing.
+1. Open https://akhilmukkara.me/gamenv/ on your preferred browser.
+2. Enter your name, choose a difficulty, and start playing.
 
 ---
 
-## 📸 Screenshots
-
-<div align="center">
-	<img src="https://img.icons8.com/color/96/000000/quiz.png" width="60"/>
-	<img src="https://img.icons8.com/color/96/000000/medal.png" width="60"/>
-	<img src="https://img.icons8.com/color/96/000000/plant-under-sun.png" width="60"/>
-</div>
-
----
 
 ## 🛠️ Tech Stack
 
 - **Frontend:** HTML5, CSS3 (Poppins font, Animate.css, Font Awesome)
 - **JavaScript:** Interactive logic, quizzes, and certificate generation
 - **No backend required** (fully client-side)
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to fork the repo, open issues, or submit pull requests to add new games, questions, or features.
 
 ---
 
